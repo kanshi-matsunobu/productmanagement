@@ -36,4 +36,9 @@ public class AdminController {
         model.addAttribute("positions", adminService.getAllPositions());
         return "admin_signup"; // 成功時に再度同じ画面を表示
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login"; // 正しいログイン画面名
+    }
 }
