@@ -1,10 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Main Page</title>
+    <title>メイン画面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            padding: 15px;
+            margin: 10px;
+            background-color: #d0e7ff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .logo:hover {
+            background-color: #aacbe5;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .button:hover {
+            background-color: #aacbe5;
+        }
+
+        .right-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-button {
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .action-button:hover {
+            background-color: #aacbe5;
+        }
+    </style>
 </head>
 <body>
-    <h2>Main Page</h2>
-    <p>ログイン成功しました。</p>
+    <div class="container">
+        <div class="header">
+            <!-- ①ロゴ（クリックでメイン画面へ遷移） -->
+            <a th:href="@{/main}" class="logo">geek商品管理システム</a>
+
+            <!-- ⑨ログアウトボタンとプロフィールボタン -->
+            <div class="right-buttons">
+                <a th:href="@{/profile/detail}" class="action-button">プロフィール</a>
+                <a th:href="@{/logout}" class="action-button">ログアウト</a>
+            </div>
+        </div>
+
+        <!-- ②～⑧アンカーリンク部分 -->
+        <div class="button-group">
+            <a th:href="@{/product}" class="button">商品管理</a>
+            <a th:href="@{/admin/manage}" class="button">管理者管理</a>
+            <a th:href="@{/manufacturer}" class="button">メーカー管理</a>
+            <a th:href="@{/category}" class="button">カテゴリー管理</a>
+            <a th:href="@{/store}" class="button">店舗管理</a>
+            <a th:href="@{/order}" class="button">発注履歴</a>
+        </div>
+    </div>
 </body>
 </html>
