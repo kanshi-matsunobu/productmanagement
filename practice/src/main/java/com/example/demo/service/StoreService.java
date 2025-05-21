@@ -18,7 +18,7 @@ public class StoreService {
         return storeRepository.findAll();
     }
 
-    public Store getStoreById(Long id) {
+    public Store getStoreById(Integer id) {
         return storeRepository.findById(id).orElse(null);
     }
 

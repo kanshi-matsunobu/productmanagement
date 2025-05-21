@@ -27,7 +27,7 @@ public class StoreController {
     }
     
     @GetMapping("/edit/{id}")
-    public String editStore(@PathVariable("id") Long id, Model model) {
+    public String editStore(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("store", storeService.getStoreById(id));
         return "store_edit";
         }
