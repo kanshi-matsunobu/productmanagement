@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.entity.Role;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
     // ロール名をすべて取得
     @Query("SELECT r.name FROM Role r")

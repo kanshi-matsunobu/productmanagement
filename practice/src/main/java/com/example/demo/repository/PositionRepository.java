@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.entity.Position;
 
-public interface PositionRepository extends JpaRepository<Position, Long> {
+public interface PositionRepository extends JpaRepository<Position, Integer> {
 
     // ポジション名をすべて取得
     @Query("SELECT p.name FROM Position p")

@@ -1,0 +1,67 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Admin;
+import com.example.demo.entity.Position;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.Store;
+import com.example.demo.repository.AdminRepository;
+import com.example.demo.repository.PositionRepository;
+import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.StoreRepository;
+
+@Service
+public class AdminManageService {
+
+    private final AdminRepository adminRepository;
+    private final StoreRepository storeRepository;
+    private final RoleRepository roleRepository;
+    private final PositionRepository positionRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AdminManageService(
+        AdminRepository adminRepository,
+        StoreRepository storeRepository,
+        RoleRepository roleRepository,
+        PositionRepository positionRepository,
+        PasswordEncoder passwordEncoder
+    ) {
+        this.adminRepository = adminRepository;
+        this.storeRepository = storeRepository;
+        this.roleRepository = roleRepository;
+        this.positionRepository = positionRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
+    }
+
+    public Admin getAdminById(Integer id) {
+        return adminRepository.findById(id).orElse(null);
+    }
+
+    public void saveAdmin(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        adminRepository.save(admin);
+    }
+
+    public List<Store> getAllStores() {
+        return storeRepository.findAll();
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    public List<Position> getAllPositions() {
+        return positionRepository.findAll();
+    }
+    public boolean isEmailExists(String email) {
+        return adminRepository.findByEmail(email).isPresent();
+    }
+}
