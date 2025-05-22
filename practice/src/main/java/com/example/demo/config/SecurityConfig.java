@@ -55,7 +55,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // 認証用のUserDetailsService（AdminServiceを使わずに直接定義）
+    // 認証用のUserDetailsServices
     @Bean
     UserDetailsService userDetailsService(AdminRepository adminRepository) {
         return email -> {

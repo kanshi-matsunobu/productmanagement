@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>店舗管理</title>
+    <title>店舗一覧</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -9,57 +9,64 @@
         }
 
         .container {
-            width: 80%;
+            width: 90%;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        .store-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .store-item {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            background-color: #d0e7ff;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .store-item span {
-            font-size: 18px;
-            margin-right: 10px;
-        }
-
-        .store-item a {
-            text-decoration: underline;
-            color: blue;
         }
 
         .logo {
             font-size: 36px;
             font-weight: bold;
             padding: 15px;
-            margin: 10px;
+            margin: 10px 0;
             background-color: #d0e7ff;
             border-radius: 10px;
             text-decoration: none;
             color: #333;
+            display: inline-block;
         }
 
         .logo:hover {
-            color: #666;
+            background-color: #aacbe5;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .store-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .store-table th, .store-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .store-table th {
+            background-color: #e0f0ff;
+        }
+
+        .store-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .store-table a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .store-table a:hover {
+            text-decoration: underline;
         }
 
         .button-group {
             margin-top: 20px;
+            display: flex;
+            gap: 15px;
         }
 
         .button {
@@ -67,11 +74,10 @@
             border: 1px solid #aaa;
             padding: 8px 15px;
             border-radius: 5px;
-            text-align: center;
             font-size: 18px;
-            cursor: pointer;
-            text-decoration: none;
             color: #333;
+            text-decoration: none;
+            text-align: center;
         }
 
         .button:hover {
@@ -84,22 +90,27 @@
         <!-- ロゴ -->
         <a th:href="@{/main}" class="logo">geek商品管理システム</a>
 
-        <h2>店舗管理</h2>
-        <div class="store-list">
-            <div class="store-item" th:each="store : ${stores}">
-                <!-- 店舗IDをリンク化 -->
-                <span>
-					店舗ID:
-                    <a th:href="@{/store/edit/{id}(id=${store.id})}">
-                        <span th:text="${store.id}"></span>
-                    </a>
-                </span>
-                <span>店舗名: <span th:text="${store.name}"></span></span>
-                <span>住所: <span th:text="${store.address}"></span></span>
-            </div>
-        </div>
+        <h2>店舗一覧</h2>
 
-        <!-- 戻るボタンのみ -->
+        <table class="store-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>店舗名</th>
+                    <th>住所</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="store : ${stores}">
+                    <td>
+                        <a th:href="@{'/store/edit/' + ${store.id}}" th:text="${store.id}"></a>
+                    </td>
+                    <td th:text="${store.name}"></td>
+                    <td th:text="${store.address}"></td>
+                </tr>
+            </tbody>
+        </table>
+
         <div class="button-group">
             <a th:href="@{/main}" class="button">戻る</a>
         </div>

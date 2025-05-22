@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理者詳細</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: #d0e7ff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+        }
+
+        .logo:hover {
+            color: #666;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .detail-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+		
+		.button-group {
+		            display: flex;
+		            gap: 15px;
+		            margin-top: 20px;
+		}
+		
+        .button {
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #aacbe5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ロゴ -->
+        <a th:href="@{/main}" class="logo">geek商品管理システム</a>
+
+        <h2>管理者詳細</h2>
+
+        <div class="detail-box">
+            <div class="detail-item">
+                <span class="detail-label">ID:</span>
+                <span th:text="${admin.id}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">姓:</span>
+                <span th:text="${admin.lastName}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">名:</span>
+                <span th:text="${admin.firstName}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">メール:</span>
+                <span th:text="${admin.email}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">電話番号:</span>
+                <span th:text="${admin.phoneNumber}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">店舗:</span>
+                <span th:text="${admin.store.name}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">権限:</span>
+                <span th:text="${admin.role.name}"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">役職:</span>
+                <span th:text="${admin.position.name}"></span>
+            </div>
+        </div>
+		<!-- 管理者権限を持つユーザーのみ表示 -->
+		<div th:if="${#authorization.expression('hasAuthority(''管理者'')')}">
+		    <div class="button-group">
+		        <a th:href="@{'/admin/manage/' + ${admin.id} + '/edit'}" class="button">編集</a>
+
+		        <form th:action="@{'/admin/manage/' + ${admin.id} + '/delete'}"
+		              method="post" th:onsubmit="return confirm('本当に削除しますか？');">
+		            <button type="submit" class="button" style="background-color: #f88;">削除</button>
+		        </form>
+
+		        <a th:href="@{/admin/manage}" class="button">戻る</a>
+		    </div>
+		</div>
+
+		<!-- 管理者でない場合でも「戻る」を見せる場合は↓を使う -->
+		<div th:if="${!#authorization.expression('hasAuthority(''管理者'')')}">
+		    <div class="button-group">
+		        <a th:href="@{/admin/manage}" class="button">戻る</a>
+		    </div>
+		</div>
+</body>
+</html>
