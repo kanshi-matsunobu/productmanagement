@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #d0e7ff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+        }
+
+        .logo:hover {
+            background-color: #aacbe5;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-form label {
+            font-weight: bold;
+        }
+
+        .search-form input, .search-form select {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .search-form button {
+            padding: 8px 15px;
+            font-size: 16px;
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .product-table th, .product-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .product-table th {
+            background-color: #e0f0ff;
+        }
+
+        .product-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-link {
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .page-link:hover {
+            background-color: #aacbe5;
+        }
+
+        .active-page {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ロゴ -->
+    <a th:href="@{/main}" class="logo">geek商品管理システム</a>
+
+    <h2>商品一覧</h2>
+
+    <!-- 検索フォーム -->
+    <form class="search-form" th:action="@{/product}" method="get">
+        <label>商品名:</label>
+        <input type="text" name="name" th:value="${name}" placeholder="商品名で検索">
+
+        <label>大カテゴリ:</label>
+        <select name="largeCategoryId">
+            <option value="">すべて</option>
+            <option th:each="large : ${largeCategories}"
+                    th:value="${large.id}"
+                    th:text="${large.name}"
+                    th:selected="${large.id == largeCategoryId}">
+            </option>
+        </select>
+
+        <label>中カテゴリ:</label>
+        <select name="middleCategoryId">
+            <option value="">すべて</option>
+            <option th:each="middle : ${middleCategories}"
+                    th:value="${middle.id}"
+                    th:text="${middle.name}"
+                    th:selected="${middle.id == middleCategoryId}">
+            </option>
+        </select>
+
+        <label>小カテゴリ:</label>
+        <select name="smallCategoryId">
+            <option value="">すべて</option>
+            <option th:each="small : ${smallCategories}"
+                    th:value="${small.id}"
+                    th:text="${small.name}"
+                    th:selected="${small.id == smallCategoryId}">
+            </option>
+        </select>
+
+        <button type="submit">検索</button>
+    </form>
+
+    <!-- 商品テーブル -->
+    <table class="product-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>商品名</th>
+            <th>商品説明</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productPage.content}">
+            <td>
+                <a th:href="@{'/product/detail/' + ${product.id}}" th:text="${product.id}"></a>
+            </td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.description}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ページネーション＆戻る -->
+    <div class="pagination-container">
+        <a th:href="@{/main}" class="page-link">戻る</a>
+        <div class="pagination">
+            <a th:each="pageNum : ${#numbers.sequence(0, productPage.totalPages - 1)}"
+               th:href="@{'/product?page=' + ${pageNum}}"
+               th:text="${pageNum + 1}"
+               th:classappend="${pageNum} == ${productPage.number} ? 'active-page' : ''"
+               class="page-link">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
