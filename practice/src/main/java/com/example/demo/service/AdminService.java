@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,5 +84,17 @@ public class AdminService {
     // 管理者一覧取得
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
+    }
+    public Admin findByEmail(String email) {
+        return adminRepository.findByEmail(email).orElse(null);
+    }
+    
+    public Admin getLoginAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof User user)) {
+            return null;
+        }
+        String email = user.getUsername();
+        return adminRepository.findByEmail(email).orElse(null);
     }
 }
