@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.Product;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("""
         SELECT p FROM Product p

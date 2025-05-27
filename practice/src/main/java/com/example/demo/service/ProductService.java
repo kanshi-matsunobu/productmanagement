@@ -31,7 +31,7 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
     
-    public Product findById(Long id) {
+    public Product findById(Integer id) {
         Optional<Product> productOpt = productRepository.findById(id);
         return productOpt.orElse(null); // 見つからなければ null を返す（今後例外投げるようにしてもOK）
     }
