@@ -79,7 +79,7 @@ public class ProductController {
     }
     
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Long id, Model model) {
+    public String detail(@PathVariable("id") Integer id, Model model) {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
         return "product_detail";
@@ -87,7 +87,7 @@ public class ProductController {
     
     //発注画面表示
     @GetMapping("/order/{id}")
-    public String showOrderForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String showOrderForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         Product product = productService.findById(id);
         if (product == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "指定された商品が見つかりません。");
@@ -100,7 +100,7 @@ public class ProductController {
 
     @PostMapping("/order/{id}")
     public String processOrder(
-            @PathVariable("id") Long id,
+            @PathVariable("id") Integer id,
             @RequestParam("quantity") Integer quantity,
             Principal principal,
             RedirectAttributes redirectAttributes
