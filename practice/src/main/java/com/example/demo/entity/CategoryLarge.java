@@ -16,7 +16,6 @@ public class CategoryLarge {
 
     private String name;
 
-    // ← これらがないと Thymeleaf がアクセスできない！
     public int getId() {
         return id;
     }
