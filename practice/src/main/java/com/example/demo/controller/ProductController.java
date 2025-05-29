@@ -116,8 +116,8 @@ public class ProductController {
             return "redirect:/product";
         }
 
-        // 保存処理
-        productOrderService.saveOrder(product, quantity, admin.getId(), admin.getStore().getId());
+     // 発注保存だけならこれで十分
+        productOrderService.saveOrder(product, quantity, admin.getId(), admin.getStore());
 
         redirectAttributes.addFlashAttribute("successMessage", "商品「" + product.getName() + "」を " + quantity + " 件発注しました。");
         return "redirect:/product/detail/" + id;
