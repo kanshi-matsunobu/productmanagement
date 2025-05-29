@@ -38,4 +38,14 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategorySmall> getAllSmallCategories() {
         return categorySmallRepository.findAll();
     }
+    
+    @Override
+    public List<CategorySmall> getSmallCategoriesByMiddleId(int middleId) {
+        return categorySmallRepository.findByMiddleCategory_Id(middleId);
+    }
+    
+    @Override
+    public List<CategoryMiddle> getMiddleCategoriesByLargeId(int largeId) {
+        return categoryMiddleRepository.findByLargeCategory_Id(largeId);
+    }
 }

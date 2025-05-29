@@ -10,4 +10,6 @@ public interface CategoryService {
     List<CategoryLarge> getAllLargeCategories();
     List<CategoryMiddle> getAllMiddleCategories();
     List<CategorySmall> getAllSmallCategories();
+    List<CategorySmall> getSmallCategoriesByMiddleId(int middleId);
+	List<CategoryMiddle> getMiddleCategoriesByLargeId(int largeId);
 }
