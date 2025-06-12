@@ -46,8 +46,13 @@ public class AdminService {
         return null;
     }
 
-    // 管理者を新規保存（パスワードはハッシュ化）
     public Admin saveAdmin(Admin admin) {
+        // メールアドレスの重複チェック
+        if (adminRepository.findByEmail(admin.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("このメールアドレスは既に登録されています。");
+        }
+
+        // パスワードをハッシュ化
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
@@ -60,6 +65,9 @@ public class AdminService {
         admin.setFirstName(updatedAdmin.getFirstName());
         admin.setEmail(updatedAdmin.getEmail());
         admin.setPhoneNumber(updatedAdmin.getPhoneNumber());
+        admin.setStore(updatedAdmin.getStore());
+        admin.setRole(updatedAdmin.getRole());
+        admin.setPosition(updatedAdmin.getPosition());
         return adminRepository.save(admin);
     }
 

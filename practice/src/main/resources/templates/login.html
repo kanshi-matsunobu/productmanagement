@@ -8,6 +8,9 @@
     <div th:if="${param.error}">
         <p style="color: red;">ログインに失敗しました。メールアドレスまたはパスワードが間違っています。</p>
     </div>
+	<div th:if="${param.selfDeleted}" style="color: red;">
+	    アカウントを削除したため、ログアウトされました。
+	</div>
     <form th:action="@{/admin/login}" method="post">
         <label>メール: <input type="email" name="username" required></label><br>
         <label>パスワード: <input type="password" name="password" required></label><br>

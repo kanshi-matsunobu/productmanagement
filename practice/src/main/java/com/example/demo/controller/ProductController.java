@@ -129,12 +129,6 @@ public class ProductController {
             @AuthenticationPrincipal org.springframework.security.core.userdetails.User userDetails,
             RedirectAttributes redirectAttributes) {
 
-        // ★ ログイン状態を確認（null 対策）
-        if (userDetails == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "ログインが必要です。");
-            return "redirect:/admin/login";
-        }
-
         String email = userDetails.getUsername();
         Admin admin = adminService.findByEmail(email);
         List<ProductOrder> orderList = productOrderService.getOrdersByAdminId(admin.getId());

@@ -2,10 +2,13 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,9 +44,12 @@ public class ManufacturerController {
 
     // 新規作成処理
     @PostMapping("/create")
-    public String create(@ModelAttribute Manufacturer manufacturer) {
+    public String createManufacturer(@Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "manufacturer_form"; // エラー時に戻る
+        }
         manufacturerService.save(manufacturer);
-        return "redirect:/manufacturer";  // 一覧画面に戻るだけ
+        return "redirect:/manufacturer";
     }
 
     // 詳細表示
@@ -65,10 +71,13 @@ public class ManufacturerController {
 
     // 編集処理
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable int id, @ModelAttribute Manufacturer manufacturer) {
-    	manufacturer.setId(id);
+    public String updateManufacturer(@PathVariable Integer id, @Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "manufacturer_form";
+        }
+        manufacturer.setId(id); // 念のためセット
         manufacturerService.update(manufacturer);
-        return "redirect:/manufacturer/detail/" + id;
+        return "redirect:/manufacturer";
     }
     
     //削除機能
