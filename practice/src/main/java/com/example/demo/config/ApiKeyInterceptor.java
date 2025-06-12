@@ -18,6 +18,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String requestKey = request.getHeader("X-API-KEY");
+        
 
         if (!apiKeyProperties.getKey().equals(requestKey)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
