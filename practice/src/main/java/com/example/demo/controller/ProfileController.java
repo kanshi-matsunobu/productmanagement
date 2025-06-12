@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,9 +44,24 @@ public class ProfileController {
     }
 
     @PostMapping("/edit")
-    public String updateProfile(@ModelAttribute Admin admin) {
-        // 更新処理
+    public String updateProfile(
+            @ModelAttribute @Valid Admin admin,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            // バリデーションエラーがある場合、再度フォーム表示に戻す
+
+            // フォームに必要な選択肢をもう一度渡す（← これ大事！）
+        	model.addAttribute("admin", admin);
+            model.addAttribute("stores", adminService.getAllStores());
+            model.addAttribute("roles", adminService.getAllRoles());
+            model.addAttribute("positions", adminService.getAllPositions());
+
+            return "profile_edit";
+        }
+
         adminService.updateAdmin(admin);
-        return "redirect:/profile/detail"; // 更新後は詳細画面にリダイレクト
+        return "redirect:/profile/detail";
     }
 }

@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,21 +27,38 @@ public class AdminController {
         model.addAttribute("stores", adminService.getAllStores());
         model.addAttribute("roles", adminService.getAllRoles());
         model.addAttribute("positions", adminService.getAllPositions());
-        return "admin_signup";
+        return "admin_signup"; // 画面ファイル名
     }
 
     @PostMapping("/signup")
-    public String registerAdmin(@ModelAttribute Admin admin, Model model) {
-        adminService.saveAdmin(admin);
-        model.addAttribute("message", "管理者登録が完了しました！");
+    public String registerAdmin(
+            @ModelAttribute @Valid Admin admin,
+            BindingResult bindingResult,
+            Model model) {
+
+        // バリデーションエラーがある場合、フォームに戻す
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("stores", adminService.getAllStores());
+            model.addAttribute("roles", adminService.getAllRoles());
+            model.addAttribute("positions", adminService.getAllPositions());
+            return "admin_signup";
+        }
+
+        try {
+            adminService.saveAdmin(admin);
+            model.addAttribute("message", "管理者登録が完了しました！");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+
         model.addAttribute("stores", adminService.getAllStores());
         model.addAttribute("roles", adminService.getAllRoles());
         model.addAttribute("positions", adminService.getAllPositions());
-        return "admin_signup"; // 成功時に再度同じ画面を表示
+        return "admin_signup";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // 正しいログイン画面名
+        return "login";
     }
 }

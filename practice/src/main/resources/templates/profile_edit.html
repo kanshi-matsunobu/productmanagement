@@ -76,26 +76,33 @@
         <a th:href="@{/main}" class="logo">geek商品管理システム</a>
         
         <h2>プロフィール編集</h2>
-        <form th:action="@{/profile/edit}" method="post">
-            <!-- IDをhiddenで送信 -->
-            <input type="hidden" name="id" th:value="${admin.id}"/>
-            
-            <div class="form-group">
-                <label>姓:</label>
-                <input type="text" name="lastName" th:value="${admin.lastName}" required>
-            </div>
-            <div class="form-group">
-                <label>名:</label>
-                <input type="text" name="firstName" th:value="${admin.firstName}" required>
-            </div>
-            <div class="form-group">
-                <label>メール:</label>
-                <input type="email" name="email" th:value="${admin.email}" required>
-            </div>
-            <div class="form-group">
-                <label>電話番号:</label>
-                <input type="text" name="phoneNumber" th:value="${admin.phoneNumber}">
-            </div>
+		<form th:action="@{/profile/edit}" th:object="${admin}" method="post">
+		    <!-- IDをhiddenで送信 -->
+		    <input type="hidden" th:field="*{id}"/>
+
+		    <div class="form-group">
+		        <label>姓:</label>
+		        <input type="text" th:field="*{lastName}" required>
+		        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red;"></div>
+		    </div>
+
+		    <div class="form-group">
+		        <label>名:</label>
+		        <input type="text" th:field="*{firstName}" required>
+		        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: red;"></div>
+		    </div>
+
+		    <div class="form-group">
+		        <label>メール:</label>
+		        <input type="email" th:field="*{email}" required>
+		        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></div>
+		    </div>
+
+		    <div class="form-group">
+		        <label>電話番号:</label>
+		        <input type="text" th:field="*{phoneNumber}">
+		        <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color: red;"></div>
+		    </div>
 
             <!-- 店舗 -->
             <div class="form-group">

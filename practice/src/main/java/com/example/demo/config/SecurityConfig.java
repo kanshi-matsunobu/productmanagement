@@ -23,14 +23,16 @@ import com.example.demo.repository.AdminRepository;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/signup", "/admin/signup/**").permitAll()
                 .requestMatchers("/admin/login", "/logout").permitAll()
+                .requestMatchers("/batch/inventory/**").permitAll()
                 .requestMatchers("/admin/manage/create").hasAuthority("管理者")
                 .requestMatchers("/admin/manage/**").authenticated()
-                .anyRequest().permitAll()
+                .requestMatchers("/product/**").authenticated()
+                .anyRequest().authenticated()
             )
             .formLogin(login -> login
                 .loginPage("/admin/login")
@@ -42,6 +44,8 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/admin/login?logout=true")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll()
             )
             .csrf(csrf -> csrf.disable());
@@ -50,7 +54,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

@@ -83,15 +83,28 @@
 
     <h2 th:text="${manufacturer.id == 0 ? 'メーカー新規作成' : 'メーカー編集'}">メーカー登録</h2>
 
-    <form th:action="@{${manufacturer.id == 0 ? '/manufacturer/create' : '/manufacturer/edit/' + manufacturer.id}}" method="post" th:object="${manufacturer}">
-        <label for="name">メーカー名</label>
-        <input type="text" id="name" th:field="*{name}" required>
+	<!-- 新規作成用フォーム -->
+	<form th:if="${manufacturer.id == 0}" th:action="@{/manufacturer/create}" method="post" th:object="${manufacturer}">
+	    <!-- 以下は共通 -->
+	    <label for="name">メーカー名</label>
+	    <input type="text" th:field="*{name}" required>
+	    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"></div>
+	    <div class="button-group">
+	        <button type="submit" class="button">登録</button>
+	        <a th:href="@{/manufacturer}" class="button">戻る</a>
+	    </div>
+	</form>
 
-        <div class="button-group">
-            <button type="submit" class="button" th:text="${manufacturer.id == 0 ? '登録' : '更新'}">送信</button>
-            <a th:href="@{/manufacturer}" class="button">戻る</a>
-        </div>
-    </form>
+	<!-- 編集用フォーム -->
+	<form th:if="${manufacturer.id != 0}" th:action="@{/manufacturer/edit/{id}(id=${manufacturer.id})}" method="post" th:object="${manufacturer}">
+	    <label for="name">メーカー名</label>
+	    <input type="text" th:field="*{name}" required>
+	    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"></div>
+	    <div class="button-group">
+	        <button type="submit" class="button">更新</button>
+	        <a th:href="@{/manufacturer}" class="button">戻る</a>
+	    </div>
+	</form>
 
 </div>
 </body>

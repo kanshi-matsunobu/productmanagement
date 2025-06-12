@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,18 +25,28 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(max = 50, message = "姓は50文字以内で入力してください")
+    @NotBlank(message = "姓を入力してください")
     @Column(nullable = false)
     private String lastName;
 
+    @Size(max = 50, message = "名は50文字以内で入力してください")
+    @NotBlank(message = "名を入力してください")
     @Column(nullable = false)
     private String firstName;
 
+    @Size(max = 255, message = "メールアドレスは255文字以内で入力してください")
+    @NotBlank(message = "メールアドレスを入力してください")
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Size(max = 255, message = "パスワードは255文字以内で入力してください", groups = AdminValidationGroups.Create.class)
+    @NotBlank(message = "パスワードを入力してください", groups = AdminValidationGroups.Create.class)
     @Column(nullable = false)
     private String password;
 
+    @Size(max = 20, message = "電話番号は20文字以内で入力してください")
+    @NotBlank(message = "電話番号を入力してください")
     @Column(nullable = false)
     private String phoneNumber;
 
@@ -47,14 +60,17 @@ public class Admin {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
+    @NotNull(message = "店舗を選択してください")
     private Store store;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @NotNull(message = "権限を選択してください")
     private Role role;
 
     @ManyToOne
     @JoinColumn(name = "position_id")
+    @NotNull(message = "役職を選択してください")
     private Position position;
 
     // ===== Getter & Setter =====

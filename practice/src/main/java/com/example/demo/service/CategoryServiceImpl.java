@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.CategoryLarge;
@@ -26,17 +27,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryLarge> getAllLargeCategories() {
-        return categoryLargeRepository.findAll();
+        return categoryLargeRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @Override
     public List<CategoryMiddle> getAllMiddleCategories() {
-        return categoryMiddleRepository.findAll();
+        return categoryMiddleRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @Override
     public List<CategorySmall> getAllSmallCategories() {
-        return categorySmallRepository.findAll();
+        return categorySmallRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
     
     @Override

@@ -71,59 +71,64 @@
     <a th:href="@{/main}" class="logo">geek商品管理システム</a>
 
     <h2>管理者編集</h2>
-
 	<form th:action="@{'/admin/manage/' + ${admin.id} + '/edit'}" method="post" th:object="${admin}">
-        <input type="hidden" th:field="*{id}"/>
+		<input type="hidden" th:field="*{id}"/>
+		<div class="form-group">
+		    <label for="lastName">姓:</label>
+			<input type="text" id="lastName" th:field="*{lastName}" required>
+		    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red;"></div>
+		</div>
 
-        <div class="form-group">
-            <label>姓:</label>
-            <input type="text" th:field="*{lastName}" required>
-        </div>
-        <div class="form-group">
-            <label>名:</label>
-            <input type="text" th:field="*{firstName}" required>
-        </div>
-        <div class="form-group">
-            <label>メール:</label>
-            <input type="email" th:field="*{email}" required>
-        </div>
-        <div class="form-group">
-            <label>電話番号:</label>
-            <input type="text" th:field="*{phoneNumber}">
-        </div>
-        <div class="form-group">
-            <label>店舗:</label>
-            <select th:field="*{store.id}" required>
-                <option value="">選択してください</option>
-                <option th:each="store : ${stores}"
-                        th:value="${store.id}"
-                        th:text="${store.name}"
-                        th:selected="${store.id == admin.store.id}">
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>権限:</label>
-            <select th:field="*{role.id}" required>
-                <option value="">選択してください</option>
-                <option th:each="role : ${roles}"
-                        th:value="${role.id}"
-                        th:text="${role.name}"
-                        th:selected="${role.id == admin.role.id}">
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>役職:</label>
-            <select th:field="*{position.id}" required>
-                <option value="">選択してください</option>
-                <option th:each="position : ${positions}"
-                        th:value="${position.id}"
-                        th:text="${position.name}"
-                        th:selected="${position.id == admin.position.id}">
-                </option>
-            </select>
-        </div>
+		<div class="form-group">
+		    <label for="firstName">名:</label>
+			<input type="text" id="firstName" th:field="*{firstName}" maxlength="50" required>
+		    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red;"></div>
+		</div>
+
+		<div class="form-group">
+		    <label for="email">メール:</label>
+			<input type="email" id="email" th:field="*{email}" maxlength="255" required>
+		    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
+		</div>
+
+		<div class="form-group">
+		    <label for="phoneNumber">電話番号:</label>
+			<input type="text" id="phoneNumber" th:field="*{phoneNumber}" maxlength="20">
+		    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color:red;"></div>
+		</div>
+		
+		<div class="form-group">
+		    <label for="store">店舗:</label>
+		    <select id="store" th:field="*{store.id}" required>
+		        <option value="">選択してください</option>
+		        <option th:each="store : ${stores}"
+		                th:value="${store.id}"
+		                th:text="${store.name}">
+		        </option>
+		    </select>
+		</div>
+
+		<div class="form-group">
+		    <label for="role">権限:</label>
+		    <select id="role" th:field="*{role.id}" required>
+		        <option value="">選択してください</option>
+		        <option th:each="role : ${roles}"
+		                th:value="${role.id}"
+		                th:text="${role.name}">
+		        </option>
+		    </select>
+		</div>
+
+		<div class="form-group">
+		    <label for="position">役職:</label>
+		    <select id="position" th:field="*{position.id}" required>
+		        <option value="">選択してください</option>
+		        <option th:each="position : ${positions}"
+		                th:value="${position.id}"
+		                th:text="${position.name}">
+		        </option>
+		    </select>
+		</div>
 
         <div class="button-group">
             <button type="submit" class="button">保存</button>

@@ -57,13 +57,25 @@ public class AdminManageService {
     // 編集（パスワードは変更しない前提）
     public void updateAdmin(Admin updatedAdmin) {
         Admin admin = getAdminById(updatedAdmin.getId());
+
         admin.setLastName(updatedAdmin.getLastName());
         admin.setFirstName(updatedAdmin.getFirstName());
         admin.setEmail(updatedAdmin.getEmail());
         admin.setPhoneNumber(updatedAdmin.getPhoneNumber());
-        admin.setStore(updatedAdmin.getStore());
-        admin.setRole(updatedAdmin.getRole());
-        admin.setPosition(updatedAdmin.getPosition());
+
+        // 🔽 IDからきちんとDBの実体を取得
+        Store store = storeRepository.findById(updatedAdmin.getStore().getId())
+                .orElseThrow(() -> new RuntimeException("店舗が見つかりません"));
+        Role role = roleRepository.findById(updatedAdmin.getRole().getId())
+                .orElseThrow(() -> new RuntimeException("権限が見つかりません"));
+        Position position = positionRepository.findById(updatedAdmin.getPosition().getId())
+                .orElseThrow(() -> new RuntimeException("役職が見つかりません"));
+
+        admin.setStore(store);
+        admin.setRole(role);
+        admin.setPosition(position);
+        
+        System.out.println("保存直前: " + admin);
         adminRepository.save(admin);
     }
 
@@ -88,5 +100,22 @@ public class AdminManageService {
     // 重複メールチェック
     public boolean isEmailExists(String email) {
         return adminRepository.findByEmail(email).isPresent();
+    }
+ // 店舗IDからStoreを取得
+    public Store getStoreById(Integer id) {
+        return storeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("店舗が見つかりません"));
+    }
+
+    // 役割IDからRoleを取得
+    public Role getRoleById(Integer id) {
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("権限が見つかりません"));
+    }
+
+    // 役職IDからPositionを取得
+    public Position getPositionById(Integer id) {
+        return positionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("役職が見つかりません"));
     }
 }
