@@ -7,12 +7,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app.api")
 public class ApiKeyProperties {
     private String key;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
+    public String getKey() { return key; }
+    public void setKey(String key) { this.key = key; }
 }
