@@ -72,6 +72,9 @@ public class Admin {
     @JoinColumn(name = "position_id")
     @NotNull(message = "役職を選択してください")
     private Position position;
+    
+    @Column(name = "last_login_at")
+    private LocalDateTime lastLoginAt;
 
     // ===== Getter & Setter =====
 
@@ -161,5 +164,12 @@ public class Admin {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+    public LocalDateTime getLastLoginAt() {
+        return lastLoginAt;
+    }
+
+    public void setLastLoginAt(LocalDateTime lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
     }
 }
