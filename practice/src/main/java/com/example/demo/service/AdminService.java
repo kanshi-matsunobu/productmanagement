@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -104,5 +107,17 @@ public class AdminService {
         }
         String email = user.getUsername();
         return adminRepository.findByEmail(email).orElse(null);
+    }
+
+    public AdminService(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
+    }
+
+    @Transactional
+    public void updateLastLoginAt(String email) {
+        adminRepository.findByEmail(email).ifPresent(admin -> {
+            admin.setLastLoginAt(LocalDateTime.now());
+            adminRepository.save(admin);
+        });
     }
 }

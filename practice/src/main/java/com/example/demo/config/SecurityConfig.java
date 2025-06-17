@@ -53,6 +53,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -65,7 +66,7 @@ public class SecurityConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(admin.getRole().getName())); // または getRoleName()
+            authorities.add(new SimpleGrantedAuthority(admin.getRole().getName()));
 
             return new User(admin.getEmail(), admin.getPassword(), authorities);
         };
