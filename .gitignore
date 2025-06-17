@@ -1,8 +1,10 @@
-# Compiled class file
-*.class
+# tcation.properties
+application.yml
 
-# Log file
-*.log
+.env, application.properties 
+:w]
+
+.log
 
 # BlueJ files
 *.ctxt
