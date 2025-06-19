@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS admins (
+CREATE TABLE admins (
   id INT NOT NULL AUTO_INCREMENT,
   store_id INT NOT NULL,
   last_name VARCHAR(50) COLLATE utf8mb4_general_ci NOT NULL,

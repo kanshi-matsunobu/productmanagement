@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS products (
+CREATE TABLE products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   category_small_id INT NOT NULL,
   manufacturer_id INT NOT NULL,
   name VARCHAR(255) NOT NULL UNIQUE,
   description TEXT,
-  image_path VARCHAR(255),
+  image_url VARCHAR(255),
   cost_price DECIMAL(10,2),
   retail_price DECIMAL(10,2),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

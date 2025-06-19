@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS categories_middle (
+CREATE TABLE categories_middle (
   id INT AUTO_INCREMENT PRIMARY KEY,
   category_large_id INT NOT NULL,
   name VARCHAR(100) NOT NULL,
