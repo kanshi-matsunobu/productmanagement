@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS product_orders (
+CREATE TABLE product_orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   admin_id INT NOT NULL,
   store_id INT NOT NULL,
