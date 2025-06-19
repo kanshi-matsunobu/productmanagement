@@ -1,10 +1,9 @@
-# tcation.properties
+.env
+application.properties
 application.yml
 
-.env, application.properties 
-:w]
 
-.log
+*.log
 
 # BlueJ files
 *.ctxt
