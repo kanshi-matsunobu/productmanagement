@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS admins (
+  id INT NOT NULL AUTO_INCREMENT,
+  store_id INT NOT NULL,
+  last_name VARCHAR(50) COLLATE utf8mb4_general_ci NOT NULL,
+  first_name VARCHAR(50) COLLATE utf8mb4_general_ci NOT NULL,
+  email VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL,
+  password VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL,
+  role_id INT NOT NULL,
+  position_id INT DEFAULT NULL,
+  phone_number VARCHAR(20) COLLATE utf8mb4_general_ci NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  last_login_at DATETIME(6) DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_admins_email (email),
+  KEY idx_admins_store_id (store_id),
+  KEY idx_admins_role_id (role_id),
+  KEY idx_admins_position_id (position_id),
+  CONSTRAINT fk_admins_store FOREIGN KEY (store_id) REFERENCES stores(id),
+  CONSTRAINT fk_admins_role FOREIGN KEY (role_id) REFERENCES roles(id),
+  CONSTRAINT fk_admins_position FOREIGN KEY (position_id) REFERENCES positions(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

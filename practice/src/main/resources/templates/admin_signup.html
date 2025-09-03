@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理者登録</title>
+</head>
+<body>
+    <h2>管理者登録</h2>
+
+    <!-- 登録完了メッセージ表示 -->
+    <div th:if="${message}">
+        <p th:text="${message}" style="color: green;"></p>
+    </div>
+	<div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red"></div>
+
+    <!-- 管理者登録フォーム -->
+	<form th:action="@{/admin/signup}" th:object="${admin}" method="post">
+	    <div>
+	        <label>姓</label>
+	        <input type="text" th:field="*{lastName}">
+	        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red;"></div>
+	    </div>
+
+	    <div>
+	        <label>名</label>
+	        <input type="text" th:field="*{firstName}">
+	        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red;"></div>
+	    </div>
+
+	    <div>
+	        <label>メールアドレス</label>
+	        <input type="email" th:field="*{email}">
+	        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
+	    </div>
+
+	    <div>
+	        <label>電話番号</label>
+	        <input type="text" th:field="*{phoneNumber}">
+	        <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color:red;"></div>
+	    </div>
+
+        <!-- 店舗セレクトボックス -->
+        <div>
+            <label for="store">店舗</label>
+            <select id="store" name="store.id" required>
+                <th:block th:each="store : ${stores}">
+                    <option th:value="${store.id}" th:text="${store.name}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <!-- 権限セレクトボックス -->
+        <div>
+            <label for="role">権限</label>
+            <select id="role" name="role.id" required>
+                <th:block th:each="role : ${roles}">
+                    <option th:value="${role.id}" th:text="${role.name}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <!-- 役職セレクトボックス -->
+        <div>
+            <label for="position">役職</label>
+            <select id="position" name="position.id" required>
+                <th:block th:each="position : ${positions}">
+                    <option th:value="${position.id}" th:text="${position.name}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <!-- 登録ボタン -->
+        <button type="submit">登録</button>
+    </form>
+</body>
+</html>

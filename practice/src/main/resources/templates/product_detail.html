@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品詳細</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #d0e7ff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+        }
+
+        .logo:hover {
+            background-color: #aacbe5;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .detail-table th, .detail-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .detail-table th {
+            width: 20%;
+            background-color: #e0f0ff;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #d0e7ff;
+            border: 1px solid #aaa;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            text-decoration: none;
+			display: inline-block;
+			cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #aacbe5;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/main}" class="logo">geek商品管理システム</a>
+
+    <h2>商品詳細</h2>
+	<div th:if="${successMessage}" style="margin: 10px 0; padding: 10px; background-color: #dff0d8; border: 1px solid #a3d7a3; border-radius: 5px;">
+	    <p th:text="${successMessage}"></p>
+	</div>
+
+    <table class="detail-table">
+        <tr>
+            <th>ID</th>
+            <td th:text="${product.id}"></td>
+        </tr>
+        <tr>
+            <th>商品名</th>
+            <td th:text="${product.name}"></td>
+        </tr>
+        <tr>
+            <th>商品説明</th>
+            <td th:text="${product.description}"></td>
+        </tr>
+        <tr>
+            <th>商品画像</th>
+            <td th:text="${product.imageUrl}">画像未登録</td>
+        </tr>
+        <tr>
+            <th>仕入れ原価</th>
+            <td th:text="${product.costPrice} + ' 円'">未登録</td>
+        </tr>
+        <tr>
+            <th>メーカー希望小売価格</th>
+            <td th:text="${product.retailPrice} + ' 円'">未登録</td>
+        </tr>
+        <tr>
+            <th>大カテゴリ</th>
+			<td th:text="${product.categorySmall.middleCategory.largeCategory.name}">未登録</td>
+        </tr>
+    </table>
+
+	<div class="button-group">
+	    <!-- 一覧に戻るボタン -->
+	    <a th:href="@{/product}" class="button">戻る</a>
+
+	    <!-- 発注ボタン -->
+		<!-- 発注画面に遷移するリンク（POSTではなくGET） -->
+		<a th:href="@{/product/order/{id}(id=${product.id})}" class="button">発注</a>
+	</div>
+</div>
+</body>
+</html>
